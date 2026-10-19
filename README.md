@@ -27,26 +27,38 @@ reads the Agent Skills format can use it. Nothing here is specific to one tool.
 
 ## Install
 
-Copy the directory wherever your agent looks for skills:
+The skill is the repo itself: `SKILL.md` at the root, plus `references/` and
+`scripts/`. It follows the open [Agent Skills](https://agentskills.io) format,
+so it works with any agent that supports skills, and degrades to plain
+instructions for any that do not. Nothing in it is specific to one vendor.
 
 ```bash
 git clone https://github.com/RankRaft/rankraft-skill
 ```
 
-| Agent | Where it goes |
-|---|---|
-| Claude Code (per project) | `.claude/skills/rankraft/` |
-| Claude Code (every project) | `~/.claude/skills/rankraft/` |
-| Codex | `.codex/skills/rankraft/` |
-| Cursor, Windsurf, others | the directory they read `SKILL.md` from; or paste `SKILL.md` into project rules |
+**1. Agents that load skills.** Copy the directory into the folder your agent
+reads skills from, named `rankraft`:
 
 ```bash
-cp -r rankraft-skill .claude/skills/rankraft     # for example
+cp -r rankraft-skill <your-agent-skills-dir>/rankraft
 ```
 
-Claude Code users who prefer a managed install can use the plugin instead:
+| Agent | Skills directory |
+|---|---|
+| Claude Code | `.claude/skills/` (project) or `~/.claude/skills/` (all projects) |
+| Other Agent Skills clients | see your agent's docs for its skills folder |
+
+**2. Agents that read an instructions file instead** (Codex, Cursor, Copilot,
+Gemini CLI, Windsurf and others commonly read `AGENTS.md` or a rules file).
+Put the contents of `SKILL.md` in that file, and keep `references/` somewhere
+the agent can open. `SKILL.md` links to them by relative path.
+
+**3. Any chat assistant.** Paste `SKILL.md`, and `references/api-reference.md`
+if you want exact request shapes, into the conversation.
+
+For Claude Code there is also a managed install, which bundles this same
+directory and keeps it up to date:
 [RankRaft/rankraft-claude-plugin](https://github.com/RankRaft/rankraft-claude-plugin).
-It vendors this exact directory and updates when this repo does.
 
 ## What is in it
 
